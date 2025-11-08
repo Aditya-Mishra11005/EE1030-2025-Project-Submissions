@@ -1,0 +1,24 @@
+\begin{table}[h!]
+\centering
+\caption{Relative Frobenius Error $\frac{\|A - A_k\|_F}{\|A\|_F}$ for Different Images}
+\begin{tabular}{c|cc|cc|cc}
+\hline
+\multirow{2}{*}{$k$} &
+\multicolumn{2}{c|}{\texttt{globe.jpg}} &
+\multicolumn{2}{c|}{\texttt{einstein.jpg}} &
+\multicolumn{2}{c}{\texttt{greyscale.png}} \\
+\cline{2-7}
+ & $\|A - A_k\|_F / \|A\|_F$ & Error (\%) &
+   $\|A - A_k\|_F / \|A\|_F$ & Error (\%) &
+   $\|A - A_k\|_F / \|A\|_F$ & Error (\%) \\
+\hline
+10  & ---      & ---   & 0.793077 & 79.31 & 0.583386 & 58.34 \\
+20  & 0.424032 & 42.40 & 0.239861 & 23.99 & 0.425663 & 42.57 \\
+50  & 0.319211 & 31.92 & 0.136972 & 13.70 & 0.220920 & 22.09 \\
+100 & 0.293252 & 29.33 & 0.029466 & 2.95  & 0.036567 & 3.66  \\
+200 & 0.294927 & 29.49 & ---      & ---   & 0.016135 & 1.61  \\
+\hline
+\end{tabular}
+\label{tab:relative_frobenius_error_all}
+\end{table}
+
