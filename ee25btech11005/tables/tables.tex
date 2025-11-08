@@ -1,24 +1,77 @@
 \begin{table}[h!]
 \centering
-\caption{Relative Frobenius Error $\frac{\|A - A_k\|_F}{\|A\|_F}$ for Different Images}
-\begin{tabular}{c|cc|cc|cc}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{|p{3.5cm}|p{3cm}|p{3cm}|p{2.2cm}|p{5.2cm}|}
 \hline
-\multirow{2}{*}{$k$} &
-\multicolumn{2}{c|}{\texttt{globe.jpg}} &
-\multicolumn{2}{c|}{\texttt{einstein.jpg}} &
-\multicolumn{2}{c}{\texttt{greyscale.png}} \\
-\cline{2-7}
- & $\|A - A_k\|_F / \|A\|_F$ & Error (\%) &
-   $\|A - A_k\|_F / \|A\|_F$ & Error (\%) &
-   $\|A - A_k\|_F / \|A\|_F$ & Error (\%) \\
+\textbf{Algorithm} &
+\textbf{Reduction Type} &
+\textbf{Stability Mechanism} &
+\textbf{Complexity} &
+\textbf{Remarks} \\
 \hline
-10  & ---      & ---   & 0.793077 & 79.31 & 0.583386 & 58.34 \\
-20  & 0.424032 & 42.40 & 0.239861 & 23.99 & 0.425663 & 42.57 \\
-50  & 0.319211 & 31.92 & 0.136972 & 13.70 & 0.220920 & 22.09 \\
-100 & 0.293252 & 29.33 & 0.029466 & 2.95  & 0.036567 & 3.66  \\
-200 & 0.294927 & 29.49 & ---      & ---   & 0.016135 & 1.61  \\
+\textbf{Lanczos Tridiagonalization + Implicit QR (Givens + Wilkinson Shift)} &
+Tridiagonal reduction of \(A^T A\) &
+Givens rotations with reorthogonalization &
+\(O(k n^2)\) &
+Fast, stable, and shift–accelerated; preserves sparsity; suitable for large SVD and image compression. \\
+\hline
+\textbf{Golub--Kahan Bidiagonalization} &
+Two–sided bidiagonal reduction of \(A\) &
+Orthogonal recurrences for \(A\) and \(A^T\) &
+\(O(k n^2)\) &
+Two–sided extension of Lanczos; forms basis of LSQR and truncated SVD solvers; stable for rectangular or sparse matrices. \\
+\hline
+\textbf{Lanczos with Bidiagonalization} &
+Bidiagonal reduction via Krylov subspace &
+Three–term orthogonal recurrence &
+\(O(k n^2)\) &
+Efficient for large sparse \(A\); used in partial SVD; sensitive to loss of orthogonality. \\
+\hline
+\textbf{QR with Householder Reduction} &
+Full Hessenberg / bidiagonal reduction &
+Householder reflectors &
+\(O(n^3)\) &
+Highly stable for dense problems; destroys sparsity; standard in LAPACK routines. \\
+\hline
+\textbf{Standard QR Algorithm} &
+Hessenberg or tridiagonal form &
+Orthogonal similarity transforms &
+\(O(n^3)\) &
+General solver for dense matrices; slower without shift strategy. \\
+\hline
+\textbf{Standard QL Algorithm} &
+Tridiagonal form &
+Orthogonal transformations &
+\(O(n^3)\) &
+Processes eigenvalues in reverse order; similar cost to QR. \\
+\hline
+\textbf{Jacobi Method} &
+Successive plane rotations to diagonal form &
+Orthogonal rotations &
+\(O(n^3)\) &
+High accuracy but computationally heavy; impractical for large sparse systems. \\
+\hline
+\textbf{Bisection (Eigenvalues only)} &
+Requires tridiagonal input &
+Sturm sequence count &
+\(O(n^2 \log n)\) &
+Stable and robust; computes eigenvalues only, not eigenvectors. \\
+\hline
+\textbf{Power Iteration} &
+None (direct iteration) &
+Normalization per step &
+\(O(n^2 k)\) &
+Low cost but converges to a single dominant eigenvalue; poor for clustered spectra. \\
+\hline
+\textbf{Hardcoded Direct Method} &
+Explicit analytical computation &
+Exact arithmetic only &
+\(O(1)\) for fixed \(n\) &
+Non-scalable and inflexible; valid only for small static matrices. \\
 \hline
 \end{tabular}
-\label{tab:relative_frobenius_error_all}
+\caption{Comparison between different Algorithms}
+\label{tablealgo}
 \end{table}
 
